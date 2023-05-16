@@ -1,0 +1,63 @@
+
+    console.log("transactions", transactions.value.length);
+
+    const expenses = transactions.value.filter(transaction => transaction.type == 'expense')
+    console.log("expenses",expenses);
+
+    const incomes = transactions.value.filter(transaction => transaction.type == 'income')
+    console.log("income" ,incomes);
+
+
+    const labels = transactions.value.map(transaction => transaction.title)
+    console.log("lable", labels);
+
+    const data = {
+        labels: labels,
+        datasets: [{
+            label: 'Income',
+            data: [20,80,40,50,60],
+            fill: false,
+            borderColor: ['rgb(75, 192, 192)', 'red'],
+            tension: 0.1
+        },
+        {
+            label: 'Expenses',
+            data: [45, 48, 40, 71, 56],
+            fill: false,
+            borderColor: 'red',
+            tension: 0.1
+        }
+    ]
+    }
+
+    const config = {
+        type: 'line',
+        data: data,
+        options: {}
+    }
+
+    const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        )
+
+
+
+
+        
+    dateSequence.forEach((date) => {
+        let totalIncome = 0;
+        let totalExpense = 0;
+        transactions.value.forEach((transaction) => {
+            console.log(new Date(transaction.createdAt).toISOString().slice(), date);
+            if (transaction.createdAt == date) {
+                if (transaction.type == 'income') {
+                    totalIncome += transaction.amount;
+                } else {
+                    totalExpense += transaction.amount;
+                }
+            }
+        });
+        income.push(totalIncome);
+        expense.push(totalExpense);
+    });
